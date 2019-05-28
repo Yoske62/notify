@@ -30,7 +30,7 @@ app.get('/messages', function (req, res) {
   res.setHeader('Content-Type', 'text/json');
   res.send(messages);
 })
-app.post('/add', function (req, res) {
+app.post('/message', function (req, res) {
   let id = parseInt(Math.random() * 1000)
   messages.push({
     title: req.body.title,
@@ -53,6 +53,21 @@ app.post('/remove', function (req, res) {
     res.statusCode = 500;
     res.setHeader('Content-Type', 'text/json');
     res.end(`${id} Not found `);
+  }
+})
+app.delete('/messages',  function (req, res) {
+  const id  = req.body.id;
+  if (id){
+    const index = messages.findIndex(x => x.id == id);
+    messages.splice(index, 1);
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/json');
+    res.end(`Deleted ${id}`);
+  } else {
+    messages = [];
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/json');
+    res.end(`Done!`);
   }
 })
 var server = app.listen(port, function () {
