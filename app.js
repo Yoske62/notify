@@ -41,30 +41,16 @@ app.post('/message', function (req, res) {
   res.setHeader('Content-Type', 'text/json');
   res.end(`${id}`);
 })
-app.post('/remove', function (req, res) {
-  const id  = req.body.id;
-  if (id){
+app.delete('/messages', function (req, res) {
+  const id = req.body.id;
+  if (id) {
     const index = messages.findIndex(x => x.id == id);
     messages.splice(index, 1);
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/json');
     res.end(`Deleted ${id}`);
   } else {
-    res.statusCode = 500;
-    res.setHeader('Content-Type', 'text/json');
-    res.end(`${id} Not found `);
-  }
-})
-app.delete('/messages',  function (req, res) {
-  const id  = req.body.id;
-  if (id){
-    const index = messages.findIndex(x => x.id == id);
-    messages.splice(index, 1);
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/json');
-    res.end(`Deleted ${id}`);
-  } else {
-    messages = [];
+    messages.splice(0, messages.length);
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/json');
     res.end(`Done!`);
