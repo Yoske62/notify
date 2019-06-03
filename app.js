@@ -44,11 +44,11 @@ app.get('/messages', function (req, res) {
   const host = req.query.host;
   const ip = getIP(req);
   if (!hosts.find(x => x.host == host)) {
-    hosts.push({host,ip, timestamp: new Date().toLocaleString('he-IL')});
+    hosts.push({host,ip, timestamp: new Date()});
   } else {
     const curr = hosts.find(x => x.ip == ip);
     if (curr) {
-      curr.timestamp = new Date().toLocaleString('he-IL')
+      curr.timestamp = new Date()
     }
   }
   res.statusCode = 200;
