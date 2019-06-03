@@ -14,7 +14,7 @@ getMessages = function (type) {
 }
 getHosts = function (type) {
   if (type == "HTML") {
-    return hosts.map(host => `<li><b>${host.host}: </b>${host.ip}</li>`).join(' ');
+    return hosts.map(host => `<li><b>${host.host}: </b>${host.ip} last request:${host.timestamp}</li>`).join(' ');
   } else if (type == "LENGTH") {
     return hosts.length;
   } else {
