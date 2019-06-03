@@ -2,11 +2,7 @@ const http = require('http');
 const port = process.env.PORT || 3000
 const messages = [];
 const hosts = [];
-messages.push({
-  id: 0,
-  title: 'some title',
-  message: 'some message'
-});
+
 getMessages = function (type) {
   if (type == "HTML") {
     return messages.map(message => `<li><b>${message.title}: </b>${message.message}</li>`).join(' ');
@@ -48,7 +44,12 @@ app.get('/messages', function (req, res) {
   const host = req.query.host;
   const ip = getIP(req);
   if (!hosts.find(x => x.host == host)) {
-    hosts.push({host,ip});
+    hosts.push({host,ip, timestamp: Date.now()});
+  } else {
+    const curr = hosts.find(x => x.ip == ip);
+    if (curr) {
+      curr.timestamp = Date.now();
+    }
   }
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/json');
